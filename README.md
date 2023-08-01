@@ -7,3 +7,5 @@
   2. ~ 0722 : Database 설계 및 ERD 작성
 
 #230729-ERD작성 및 UML 작성
+
+#230802-Database 생성
