@@ -1,0 +1,46 @@
+package kr.or.ddit.middle.controller.board;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/chatbotServlet.do")
+public class ChatbotServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    
+    private Map<String, String> responses;
+
+    public ChatbotServlet() {
+        super();
+        responses = new HashMap<>();
+        responses.put("구매할게요", "네 좋아요!");
+        responses.put("계좌번호불러주세요", "3333-07-1121112 입니다");
+        responses.put("입금했어요", "감사합니다");
+        responses.put("바이", "ㅇㅋ");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/plain;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        String userMessage = request.getParameter("message");
+        String chatbotResponse = responses.get(userMessage);
+
+        if (chatbotResponse == null) {
+            chatbotResponse = "죄송해요, 잘 이해하지 못했어요.";
+        }
+
+        out.write(chatbotResponse);
+        out.close();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+}

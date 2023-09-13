@@ -1,0 +1,89 @@
+package kr.or.ddit.middle.controller.member;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import kr.or.ddit.middle.service.member.IMemberService;
+import kr.or.ddit.middle.service.member.MemberServiceImpl;
+import kr.or.ddit.middle.vo.BoardVO;
+import kr.or.ddit.middle.vo.MemberVO;
+
+@WebServlet("/adminMem/*")
+public class AdminMemCheck extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	private IMemberService service = MemberServiceImpl.getInstance();
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+			// 요청 URI를 얻어온다.
+			String requestUri = request.getRequestURI();
+			// contextPath를 얻어온다.
+			// contextPath 요청시 Root를 뜻한다.
+			String contextPath = request.getContextPath();
+			// contextPath를 제와한 나머지 URL을 command라고 지칭한다.
+			String command = requestUri.substring(contextPath.length());
+			
+			request.setCharacterEncoding("utf-8");
+
+			String goPage = ""; // 이동할 페이지
+			
+			if (command.equals("/adminMem/adminMemList.do")) { // 공지사항목록
+				adminMemList(request);
+				request.getRequestDispatcher(request.getContextPath() +"/Contents/AdminMbrMgmt.jsp").forward(request, response);
+			
+			}
+	}
+	
+	private void adminMemList(HttpServletRequest request) {
+		List<MemberVO> list = service.adminMemCheck();
+		request.setAttribute("adList", list);
+	}
+	
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+	
+		// 요청 URI를 얻어온다.
+		String requestUri = request.getRequestURI();
+		// contextPath를 얻어온다.
+		// contextPath 요청시 Root를 뜻한다.
+		String contextPath = request.getContextPath();
+		// contextPath를 제와한 나머지 URL을 command라고 지칭한다.
+		String command = requestUri.substring(contextPath.length());
+		
+		System.out.println(command);
+		
+		request.setCharacterEncoding("utf-8");
+		
+
+		
+		
+		if(command.equals("/adminMem/delete.do")) {
+	    	  String memno= request.getParameter("mem_id");
+	    	  
+	    	  System.out.println("내꺼 " + memno);
+	    	  
+	    	  int cnt = service.memberDelete(memno);
+	    	  System.out.println(cnt);
+	    	  if (cnt > 0) { // 삭제 성공
+	    		    response.getWriter().write("success");
+	    		} else {
+	    		    // 삭제 실패 처리
+	    		    response.getWriter().write("failure");
+	    		}
+	    }
+						
+	}
+	
+
+
+}

@@ -1,0 +1,43 @@
+package kr.or.ddit.middle.vo;
+
+public class PaymentVO {
+	private String pay_no;
+	private String res_code;
+	private String pay_date;
+	private int pay_price;
+	private String pay_method;
+	
+	public String getPay_no() {
+		return pay_no;
+	}
+	public void setPay_no(String pay_no) {
+		this.pay_no = pay_no;
+	}
+	public String getRes_code() {
+		return res_code;
+	}
+	public void setRes_code(String res_code) {
+		this.res_code = res_code;
+	}
+	public String getPay_date() {
+		return pay_date;
+	}
+	public void setPay_date(String pay_date) {
+		this.pay_date = pay_date;
+	}
+	public int getPay_price() {
+		return pay_price;
+	}
+	public void setPay_price(int pay_price) {
+		this.pay_price = pay_price;
+	}
+	public String getPay_method() {
+		return pay_method;
+	}
+	public void setPay_method(String pay_method) {
+		this.pay_method = pay_method;
+	}
+	
+	
+
+}
